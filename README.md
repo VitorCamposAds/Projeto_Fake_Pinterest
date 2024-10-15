@@ -67,6 +67,6 @@ Uma réplica do Pinterest construída com Flask e Python, onde os usuários pode
 
 ### Contribuições
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir um problema ou enviar um pull request.
+Contribuições são bem-vindas! Sinta-se à vontade para abrir uma "issue" ou enviar um pull request.
 
 Sinta-se à vontade para modificar conforme sua preferência!
