@@ -1,7 +1,5 @@
-from fakepinterest import app, database
+from . import database
 
-if __name__ == "__main__":
-    with app.app_context():
-        database.create_all()  # Cria as tabelas no banco de dados
-    app.run(debug=False)
-
+# Criar todas as tabelas
+with app.app_context():
+    database.create_all()

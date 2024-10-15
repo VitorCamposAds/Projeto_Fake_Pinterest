@@ -14,4 +14,12 @@ bcrypt = Bcrypt(app)  # Instância do Bcrypt para hashing de senhas
 login_manager = LoginManager(app)  # Instância do LoginManager para autenticação
 login_manager.login_view = "homepage"  # Define a rota de login
 
-from . import routes  # Importar rotas após a definição do app e database
+# Importar rotas após a definição do app e database
+from . import routes  
+
+def create_db():
+    with app.app_context():
+        database.create_all()  # Cria as tabelas no banco de dados
+
+# Chamar a função para criar o banco de dados
+create_db()
