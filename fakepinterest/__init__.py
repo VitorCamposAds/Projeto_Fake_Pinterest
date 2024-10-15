@@ -2,10 +2,11 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
+import os  # Importando a biblioteca os
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///comunidade.db"  # Configuração do banco de dados
-app.config["SECRET_KEY"] = "821c366a2b3fee7fcce6dd2a2f0eb185"  # Chave secreta para sessões
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL", "sqlite:///comunidade.db")  # Configuração do banco de dados
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "821c366a2b3fee7fcce6dd2a2f0eb185")  # Chave secreta para sessões
 app.config["UPLOAD_FOLDER"] = "static/fotos_posts"
 
 database = SQLAlchemy(app)  # Instância do banco de dados
