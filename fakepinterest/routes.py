@@ -29,31 +29,30 @@ def criarconta():
     form_criar_conta = FormCriarConta()
     
     if form_criar_conta.validate_on_submit():
-        # Verifica se o email ou username já existem
-        if Usuario.query.filter_by(email=form_criar_conta.email.data).first() or \
-           Usuario.query.filter_by(username=form_criar_conta.username.data).first():
-            flash('Email ou nome de usuário já estão em uso. Tente outro.', 'error')
-            return redirect(url_for("criarconta"))
-        
-        senha = bcrypt.generate_password_hash(form_criar_conta.senha.data)
-        usuario = Usuario(username=form_criar_conta.username.data, 
-                          senha=senha, 
-                          email=form_criar_conta.email.data)
-        
         try:
+            # Verifica se o email ou username já existem
+            if Usuario.query.filter_by(email=form_criar_conta.email.data).first() or \
+               Usuario.query.filter_by(username=form_criar_conta.username.data).first():
+                flash('Email ou nome de usuário já estão em uso. Tente outro.', 'error')
+                return redirect(url_for("criarconta"))
+            
+            senha = bcrypt.generate_password_hash(form_criar_conta.senha.data)
+            usuario = Usuario(username=form_criar_conta.username.data, 
+                              senha=senha, 
+                              email=form_criar_conta.email.data)
+            
             database.session.add(usuario)
             database.session.commit()
             login_user(usuario, remember=True)
             flash('Conta criada com sucesso!', 'success')
             return redirect(url_for("perfil", id_usuario=usuario.id))
+        
         except Exception as e:
             database.session.rollback()
-            print(f"Erro ao persistir: {e}")
+            print(f"Erro ao persistir: {e}")  # Log do erro
             flash('Houve um erro ao criar a conta. Tente novamente.', 'error')
 
     return render_template("criarconta.html", form=form_criar_conta)
-
-
 
 # Define a rota para a página de perfil do usuário
 @app.route("/perfil/<id_usuario>", methods=["GET", "POST"])
